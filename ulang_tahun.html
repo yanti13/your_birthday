@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun Sayang!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fdeff9 0%, #e0f2f7 100%); /* Soft Pink to Light Blue Gradient */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #364f6b; /* Dark Blue */
+            overflow-x: hidden; /* Prevent horizontal scroll from effects */
+        }
+
+        .page {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white for aesthetic */
+            padding: 40px;
+            margin: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: 90%;
+            max-width: 650px;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            border: 3px solid #f06292; /* Pink border */
+        }
+
+        .page.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2, p {
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #f06292; /* Brighter Pink */
+            font-size: 3.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-family: 'Quicksand', sans-serif;
+            color: #4fc3f7; /* Bright Blue */
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 1.3em;
+            line-height: 1.7;
+            font-weight: 400;
+            color: #5b7994;
+        }
+
+        .next-button {
+            background: linear-gradient(45deg, #f06292, #e91e63); /* Pink gradient */
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            box-shadow: 0 4px 10px rgba(240, 98, 146, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .next-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 15px rgba(240, 98, 146, 0.6);
+        }
+
+        /* Emoticon styling */
+        .wave, .smile, .sparkle, .muscle, .star, .monster, .gift, .thinking, .eyes, .patience, .blush, .pointing-right, .tired, .sweat_smile, .pleading, .exclamation, .heart, .kissing_heart, .grateful, .birthday, .infinity {
+            display: inline-block;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-3px); }
+        }
+
+        .wave { animation-delay: 0.1s; }
+        .smile { animation-delay: 0.2s; }
+        .sparkle { animation-delay: 0.3s; }
+        .muscle { animation-delay: 0.4s; }
+        .star { animation-delay: 0.5s; }
+        .monster { animation-delay: 0.6s; }
+        .gift { animation-delay: 0.7s; }
+        .thinking { animation-delay: 0.8s; }
+        .eyes { animation-delay: 0.9s; }
+        .patience { animation-delay: 1.0s; }
+        .blush { animation-delay: 1.1s; }
+        .pointing-right { animation-delay: 1.2s; }
+        .tired { animation-delay: 1.3s; }
+        .sweat_smile { animation-delay: 1.4s; }
+        .pleading { animation-delay: 1.5s; }
+        .exclamation { animation-delay: 1.6s; }
+        .heart { animation-delay: 0.1s; color: #e91e63; }
+        .kissing_heart { animation-delay: 0.3s; color: #f48fb1; }
+        .grateful { animation-delay: 0.5s; color: #64b5f6; }
+        .birthday { animation-delay: 0.7s; color: #ffeb3b; }
+        .infinity { animation-delay: 0.9s; color: #9c27b0; }
+
+
+        #surprise-page {
+            display: none;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 5px solid #4fc3f7; /* Blue border for surprise page */
+            overflow: hidden; /* Ensure confetti/balloons stay within bounds */
+        }
+
+        /* Balloon styles */
+        .balloon {
+            width: 60px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom, #f48fb1, #f06292); /* Pink Balloon */
+            position: absolute;
+            bottom: -100px; /* Start below the viewport */
+            animation: rise 10s ease-in-out forwards infinite alternate;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.2);
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 30px;
+            background-color: rgba(0,0,0,0.3);
+        }
+
+        .balloon:nth-child(even) {
+            background: linear-gradient(to bottom, #81d4fa, #4fc3f7); /* Blue Balloon */
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0); opacity: 0.8; }
+            100% { transform: translateY(-100vh) scale(1.1); opacity: 0; }
+        }
+
+        /* Firework styles */
+        .firework {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: white; /* Start white */
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 1; background-color: white; }
+            20% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(5); opacity: 0; transform-origin: center center; }
+        }
+
+        /* Ribbon styles */
+        .ribbon {
+            position: absolute;
+            width: 40px;
+            height: 5px;
+            background: linear-gradient(45deg, #f06292, #4fc3f7);
+            transform-origin: top center;
+            opacity: 0;
+            animation: flutter 4s linear forwards infinite;
+        }
+
+        @keyframes flutter {
+            0% { transform: translateX(0) rotate(0deg) scaleX(1); opacity: 0; }
+            10% { opacity: 1; }
+            50% { transform: translateX(20px) rotate(30deg) scaleX(1.2); }
+            100% { transform: translateX(0) rotate(0deg) scaleX(1); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="page active" id="page1">
+        <h2>Hai sayang! <span class="wave">👋</span></h2>
+        <p style="font-weight: bold;">Gimana kabarmu hari ini? Semoga selalu ceria ya! <span class="smile">😊</span></p>
+        <p>Ada cerita seru apa nih hari ini? Pengen dengerin deh! <span class="sparkle">✨</span></p>
+        <a href="#" class="next-button" onclick="nextPage()">Next Yuk! <span class="smile">➡️</span></a>
+    </div>
+
+    <div class="page" id="page2">
+        <h2>Semangat Terus ya! <span class="muscle">💪</span></h2>
+        <p>Aku tau kok, kamu itu kuat banget! Kamu pasti bisa ngelewatin semua tantangan, kan kamu itu Ultraman-nya aku! <span class="star">⭐</span> Bisa kalahin semua monster deh! <span class="monster">👾</span></p>
+        <a href="#" class="next-button" onclick="nextPage()">Lanjut Lagi! <span class="smile">➡️</span></a>
+    </div>
+
+    <div class="page" id="page3">
+        <h2>Ada Sesuatu Nih! <span class="gift">🎁</span></h2>
+        <p>Hmm, aku ada sesuatu spesial buat kamu nih... <span class="thinking">🤔</span> Kamu mau tau nggak? <span class="eyes">👀</span></p>
+        <a href="#" class="next-button" onclick="nextPage()">Next Lagi Yuuk! <span class="smile">➡️</span></a>
+    </div>
+
+    <div class="page" id="page4">
+        <h2>Sedikit Lagi... <span class="patience">⏳</span></h2>
+        <p>Sabar ya sayang... udah deket kok! <span class="blush">😊</span> Next lagi yaa... <span class="pointing-right">👉</span></p>
+        <a href="#" class="next-button" onclick="nextPage()">Next! <span class="smile">➡️</span></a>
+    </div>
+
+    <div class="page" id="page5">
+        <h2>Udah Capek Ya? <span class="tired">😥</span></h2>
+        <p>Aku tau kamu pasti udah penasaran banget ya? <span class="sweat_smile">😅</span> Janji deh, abis ini aku beneran kasih lihat! Jadi, next sekali lagi ya? <span class="pleading">🥺</span></p>
+        <a href="#" class="next-button" onclick="showSurprise()">NEXT BANGET! <span class="exclamation">❗</span></a>
+    </div>
+
+    <div class="page" id="surprise-page">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+            </div>
+        <h1>🎉 HAPPY BIRTHDAY SAYANGKU! 🎉</h1>
+        <h2>Selamat ulang tahun untuk orang yang paling spesial di hatiku! <span class="heart">❤️</span></h2>
+        <p style="font-size: 1.3em;">Di hari yang indah ini, aku ingin kamu tau betapa berartinya kamu dalam hidupku. Kamu adalah alasan aku tersenyum setiap hari. Kamu adalah rumah tempat hatiku berlabuh. Kamu adalah segalanya bagiku. <span class="heart">💖</span></p>
+        <p style="font-size: 1.3em;">Cintaku padamu takkan pernah pudar, seperti bintang yang selalu bersinar di langit malam. Aku sayang banget sama kamu! <span class="kissing_heart">😘</span></p>
+        <p style="font-size: 1.2em;">Makasih ya sayang, udah sabar banget sama aku selama ini. Makasih juga udah mau jadi bagian terindah dalam hidupku. Aku beruntung banget punya kamu. <span class="grateful">🙏</span></p>
+        <h2 style="margin-top: 30px;">Sekali lagi, SELAMAT ULANG TAHUN untuk orang yang paling spesial di hidupku! <span class="birthday">🎂</span> Semoga semua yang kamu impikan bisa terwujud ya. Aku akan selalu ada di sini untukmu. <span class="infinity">♾️</span> I LOVE YOU! <span class="heart">❤️</span><span class="heart">❤️</span><span class="heart">❤️</span></h2>
+    </div>
+
+    <script>
+        const pages = ['page1', 'page2', 'page3', 'page4', 'page5', 'surprise-page'];
+        let currentPageIndex = 0;
+
+        function showPage(index) {
+            pages.forEach((id, i) => {
+                const pageElement = document.getElementById(id);
+                if (pageElement) {
+                    pageElement.classList.remove('active');
+                    pageElement.style.display = 'none';
+                }
+            });
+
+            const currentPageElement = document.getElementById(pages[index]);
+            if (currentPageElement) {
+                currentPageElement.style.display = 'block';
+                setTimeout(() => { // Add a slight delay for the transition to work
+                    currentPageElement.classList.add('active');
+                }, 50);
+            }
+        }
+
+        function nextPage() {
+            if (currentPageIndex < pages.length - 2) { // -2 because 'surprise-page' is handled by showSurprise
+                currentPageIndex++;
+                showPage(currentPageIndex);
+            }
+        }
+
+        function showSurprise() {
+            currentPageIndex = pages.length - 1; // Set to surprise page index
+            showPage(currentPageIndex);
+            activateSurpriseEffects();
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function activateSurpriseEffects() {
+            const surprisePageDiv = document.querySelector('#surprise-page > div');
+
+            // Balloons
+            for (let i = 0; i < 20; i++) {
+                const balloon = document.createElement('div');
+                balloon.classList.add('balloon');
+                balloon.style.left = `${Math.random() * 100}%`;
+                balloon.style.animationDelay = `${Math.random() * 5}s`; // Stagger animation
+                surprisePageDiv.appendChild(balloon);
+            }
+
+            // Fireworks (50 total, exploding over time)
+            let fireworkCount = 0;
+            const fireworkInterval = setInterval(() => {
+                if (fireworkCount >= 50) {
+                    clearInterval(fireworkInterval);
+                    return;
+                }
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                firework.style.top = `${Math.random() * 80 + 10}%`; // Random vertical position
+                firework.style.left = `${Math.random() * 90 + 5}%`;  // Random horizontal position
+                firework.style.backgroundColor = getRandomColor(); // Random color for firework
+                firework.style.animationDelay = `${Math.random() * 0.5}s`; // Slight delay
+                surprisePageDiv.appendChild(firework);
+                // Remove firework element after its animation finishes
+                firework.addEventListener('animationend', () => {
+                    firework.remove();
+                });
+                fireworkCount++;
+            }, 100); // Create a new firework every 100ms
+
+            // Ribbons (dynamic fluttering)
+            for (let i = 0; i < 30; i++) {
+                const ribbon = document.createElement('div');
+                ribbon.classList.add('ribbon');
+                ribbon.style.top = `${Math.random() * 80 + 10}%`;
+                ribbon.style.left = `${Math.random() * 100}%`;
+                ribbon.style.width = `${Math.random() * 30 + 20}px`; // Vary ribbon width
+                ribbon.style.animationDelay = `${Math.random() * 4}s`;
+                ribbon.style.animationDuration = `${Math.random() * 3 + 2}s`; // Vary animation duration
+                surprisePageDiv.appendChild(ribbon);
+            }
+        }
+
+        // Initial page load
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage(currentPageIndex);
+        });
+    </script>
+
+</body>
+</html>
